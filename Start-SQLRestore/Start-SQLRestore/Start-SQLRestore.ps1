@@ -1,5 +1,36 @@
 ﻿<#
-	TODO: Actual help and description....
+.SYNOPSIS
+    Script that allows you to quickly restore a database by wrangling a bunch of files together.
+.DESCRIPTION
+    This function will take in a series of directories that contain files and attempt to "stich together" a series of database restore steps to execute. The function supports doing a full restore
+    with the files provided or a "point in time" restore by utilizing the "stop at" functionality of the objects 
+.PARAMETER ServerName
+    The server name you want to restore the database to. Required.
+.PARAMETER InstanceName
+    The instance name, is using a named (non-default) instance. Optional, defaults to "default"
+.PARAMETER DatabaseName
+    The name of the daatabase you want to restore. Must exist on the server already. Required.
+.PARAMETER FullBackupFileLocation
+    A directory path that contains the full backups of the database you want to restore. Required.
+.PARAMETER FullBackupFileLocation
+    The file extension of the full backup files. Defaults to ".bak". Required.    
+.PARAMETER DifferentialBackupFileLocation
+    A directory path that contains the differential backups of the database you want to restore. Optional.
+.PARAMETER DifferentialBackupFileExtension
+    The file extension of the differential backup files. Defaults to ".dif". Optional. 
+.PARAMETER logBackupFileLocation
+    A directory path that contains the log backups of the database you want to restore. Optional.
+.PARAMETER logBackupFileExenstion
+    The file extension of the log backup files. Defaults to ".dif". Optional. 
+.PARAMETER ToPointInTime
+    A date and time to attempt to restore the database to. Timeframe should exist within the files you're attempting to restore. Optional.
+.EXAMPLE
+    Restore a local copy of AdventureWorks2014 by providing the location of full, differential, and log file backups and stopping at a point in time.
+    .\Start-SQLRestore.ps1 -servername localhost -databaseName AdventureWorks2014 -fullBackupFileLocation C:\temp\backups\localhost\AdventureWorks2014\Full -differentialBackupFileLocation C:\temp\backups\localhost\AdventureWorks2014\Differential -logBackupFileLocation C:\temp\backups\localhost\AdventureWorks2014\Log -toPointInTime "09/30/2017 10:49:36 AM" -Verbose -ErrorAction Stop
+.OUTPUTS
+    None
+.NOTES
+    New features being addded; not all parameters fully defined yet.
 #>
 [cmdletbinding()]
 param(
